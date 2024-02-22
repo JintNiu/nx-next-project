@@ -1,39 +1,38 @@
 // "use client";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import "@/assets/styles/globals.css";
+import { Metadata } from "next";
 import Link from "next/link";
-import { useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation";
 
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+// import { useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "NX Manager",
-  description: "NX Manager",
+  title: "nx",
+  description: "...",
 };
 
 export default function RootLayout({
   children,
   team,
   analytics,
+  modal,
 }: {
   children: React.ReactNode;
   team: React.ReactNode;
   analytics: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   //   const allSegments = useSelectedLayoutSegments();
-  //   console.log("allSegments", allSegments);
+  //   const allSegment = useSelectedLayoutSegment();
+  //   console.log("allSegments", allSegments, allSegment);
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <>
-          {children}
-          {team}
-          {analytics}
           <Link style={{ position: "absolute", marginTop: 100 }} href={`/`}>
             back index
           </Link>
+          {children}
+          {modal}
         </>
       </body>
     </html>
