@@ -1,0 +1,16 @@
+.app-layout-wrapper {
+    height: 100%;
+
+    .app-layout-spin {
+        flex: 1;
+        height: 100%;
+
+        .ant-spin-container {
+            height: 100%;
+        }
+    }
+
+    .app-layout-children {
+        height: 100%;
+    }
+}
