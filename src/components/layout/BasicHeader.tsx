@@ -14,7 +14,7 @@ const BasicHeader = () => {
 
   const onLocaleChange = (e: RadioChangeEvent) => {
     setCookie(LOCALE_COOKIE_KEY, e.target.value);
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
