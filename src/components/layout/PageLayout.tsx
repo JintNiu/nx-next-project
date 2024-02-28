@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo, memo } from "react";
 import "./index.scss";
 import PageHeader from "./PageHeader";
 
-type PropsType = { showHeader?: boolean; pageTitle?: string; children: React.ReactNode };
+type PropsType = { showHeader?: boolean; pageTitle?: string; children?: React.ReactNode };
 
 const PageLayout = ({ showHeader = false, pageTitle, children }: PropsType) => {
   return (
