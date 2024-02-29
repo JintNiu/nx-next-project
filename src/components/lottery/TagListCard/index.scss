@@ -1,0 +1,11 @@
+.tag-list-card{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+
+    .ant-card-body{
+        overflow: auto;
+    }
+
+}
