@@ -1,13 +1,45 @@
 "use client";
 import PageHeader from "@/components/layout/PageHeader";
 import PageLayout from "@/components/layout/PageLayout";
-import { Space } from "antd";
+import { Card, Space, Tag } from "antd";
 import React, { useEffect, useState, useMemo, memo, useReducer, useRef } from "react";
 import { lotteryData, LotteryData } from "./data";
 
 import "./index.scss";
 
 const maxSelectNumber = 3;
+
+const tagList = [{ name: "和圣兄弟" }, { name: "鲍汁黄焖鸡" }, { name: "鱼你在一起" }];
+
+type TagListType = {
+  list: LotteryData[];
+  color?: string;
+  onClose?: Function;
+  onCheck?: Function;
+};
+
+const TagList = ({ list = [], color = "green", onCheck, onClose }: TagListType) => {
+  return list.map((item) => {
+    return (
+      <Tag
+        key={item.name}
+        className="lottery-tag"
+        color={color}
+        closable={!!onClose}
+        style={{ cursor: !!onCheck ? "pointer" : "unset" }}
+        onClose={(e) => {
+          e.preventDefault();
+          onClose?.(item);
+        }}
+        onClick={() => {
+          onCheck?.(item);
+        }}
+      >
+        {item.name}
+      </Tag>
+    );
+  });
+};
 
 const Lottery = () => {
   const [data, setData] = useState<LotteryData[]>([]);
@@ -18,7 +50,7 @@ const Lottery = () => {
     return action;
   }, 0);
 
-  const timer = useRef<string | number | NodeJS.Timeout | undefined>();
+  const timer = useRef<NodeJS.Timeout | undefined>();
 
   useEffect(() => {
     setData(lotteryData);
@@ -63,32 +95,47 @@ const Lottery = () => {
     timer.current = undefined;
   };
 
+  const handleDeleteTag = () => {};
+  const handleCheckTag = () => {};
+  const handleCheckSelectedTag = () => {};
+
   return (
-    <PageLayout showHeader pageTitle="今天吃什么">
+    <PageLayout showHeader pageTitle="今天吃什么" backgroundColor="unset">
       <div className="lottery-wrapper">
-        <Space className="lottery-selected">
-          已选：
-          {selected.length
-            ? selected.map((item) => {
-                return <span key={item.name}>{item.name}</span>;
-              })
-            : "请点击按钮开始"}
-        </Space>
-        <div className="lottery-content">
-          <div className="name">{data?.[currentIndex]?.name}</div>
+        <div className="lottery-left">
+          <Card title="待选店铺（可手动剔除）">
+            <TagList list={lotteryData} onClose={handleDeleteTag} onCheck={handleCheckTag} />
+          </Card>
+          <Card title="本周已选店铺（由右侧选择）">
+            <TagList list={tagList} color="gold" />
+          </Card>
         </div>
 
-        <Space className="lottery-btn-wrapper">
-          {disabled ? (
-            <div className="lottery-btn lottery-btn-reset" onClick={handleReset}>
-              Reset
-            </div>
-          ) : (
-            <div className={`lottery-btn`} onClick={handleClick}>
-              {rolling ? "抽取" : "Start"}
-            </div>
-          )}
-        </Space>
+        <Card title="抽取本次店铺" className="lottery-right">
+          <div className="lottery-selected">
+            {selected.length ? (
+              <TagList color="default" list={selected} onCheck={handleCheckSelectedTag} />
+            ) : (
+              "请点击按钮开始"
+            )}
+          </div>
+
+          <div className="lottery-content">
+            <div className="name">{data?.[currentIndex]?.name}</div>
+          </div>
+
+          <Space className="lottery-btn-wrapper">
+            {disabled ? (
+              <div className="lottery-btn lottery-btn-reset" onClick={handleReset}>
+                重置
+              </div>
+            ) : (
+              <div className={`lottery-btn`} onClick={handleClick}>
+                {rolling ? "抽取" : "开始"}
+              </div>
+            )}
+          </Space>
+        </Card>
       </div>
     </PageLayout>
   );
