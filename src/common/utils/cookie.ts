@@ -61,3 +61,36 @@ const isAnyType = (obj: any, type: string) => {
   }
   return objType.toLowerCase() === type.toLowerCase();
 };
+
+/**
+ * 设置localStorage
+ * @param {*} name
+ * @param {*} value
+ */
+export const setStorage = (name: string, value: any) => {
+  window.localStorage.setItem(name, value);
+};
+
+/**
+ * 获取localStorage
+ * @param {*} name
+ */
+export const getStorage = (name: string): string | null => {
+  return window.localStorage.getItem(name);
+};
+
+/**
+ * 删除localStorage
+ * @param {*} name
+ */
+export const delStorage = (name: string) => {
+  return window.localStorage.removeItem(name);
+};
+
+/**
+ * @desc: 清空 localStorage
+ * @return:
+ */
+export const clearStorage = () => {
+  window.localStorage.clear();
+};

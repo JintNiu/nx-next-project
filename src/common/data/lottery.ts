@@ -1,8 +1,8 @@
-export type LotteryData = {
+export type LotteryDataType = {
   name: string;
 };
 
-export const lotteryData: LotteryData[] = [
+export const lotteryData: LotteryDataType[] = [
   // { name: "和圣兄弟" },
   // { name: "鲍汁黄焖鸡" },
   // { name: "鱼你在一起" },
@@ -30,7 +30,6 @@ export const lotteryData: LotteryData[] = [
   // { name: "袁记云饺" },
   // { name: "米纸越南小馆" },
   // { name: "河南优质烩面" },
-
 
   { name: "稻香情" },
   { name: "和圣兄弟" },

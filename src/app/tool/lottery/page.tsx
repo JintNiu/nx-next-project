@@ -1,22 +1,23 @@
 "use client";
+import { lotteryData, LotteryDataType } from "@/common/data/lottery";
+import { getStorage, setStorage } from "@/common/utils/cookie";
+import { getWeek } from "@/common/utils/date";
 import PageLayout from "@/components/layout/PageLayout";
 import TagList from "@/components/lottery/TagList";
 import TagListCard from "@/components/lottery/TagListCard";
 import { Card, Space, Tag } from "antd";
 import React, { useEffect, useState, useMemo, memo, useReducer, useRef } from "react";
-import { lotteryData, LotteryData } from "./data";
 
 import "./index.scss";
 
 const maxSelectNumber = 3;
-
-const tagList = [{ name: "和圣兄弟" }, { name: "鲍汁黄焖鸡" }, { name: "鱼你在一起" }];
+const WEEK_COOKIE_KEY = "WEEK_COOKIE";
 
 const Lottery = () => {
-  const [sourceData, setSourceData] = useState<LotteryData[]>([]);//所有店铺
-  const [selectList, setSelectList] = useState<LotteryData[]>([]);//待选店铺
-  const [weekList, setWeekList] = useState<LotteryData[]>([]);//本周已选
-  const [selected, setSelected] = useState<LotteryData[]>([]);
+  const [sourceData, setSourceData] = useState<LotteryDataType[]>([]); //所有店铺
+  const [selectList, setSelectList] = useState<LotteryDataType[]>([]); //待选店铺
+  const [weekList, setWeekList] = useState<LotteryDataType[]>([]); //本周已选
+  const [selected, setSelected] = useState<LotteryDataType[]>([]);
   const [disabled, setDisabled] = useState(false);
   const [rolling, setRolling] = useState(false);
   const [currentIndex, dispatchCurrentIndex] = useReducer((state: any, action: any) => {
@@ -26,8 +27,24 @@ const Lottery = () => {
   const timer = useRef<NodeJS.Timeout | undefined>();
 
   useEffect(() => {
-    setSourceData(lotteryData);
-    setSelectList(JSON.parse(JSON.stringify(lotteryData)));
+    setSourceData(JSON.parse(JSON.stringify(lotteryData)));
+
+    const cookieValue = getStorage(WEEK_COOKIE_KEY);
+    const cookieWeekData = cookieValue ? JSON.parse(cookieValue) : null;
+    const currentWeek = getWeek(new Date());
+
+    if (!cookieWeekData || cookieWeekData.week !== currentWeek) {
+      setStorage(
+        WEEK_COOKIE_KEY,
+        JSON.stringify({
+          week: currentWeek,
+          data: [],
+        })
+      );
+      setWeekList([]);
+      return;
+    }
+    setWeekList(cookieWeekData.data);
   }, []);
 
   const getRandomNumber = () => {
@@ -45,19 +62,12 @@ const Lottery = () => {
 
   // 待选列表需要提出本周已选
   useEffect(() => {
-    setSelectList(handleDelete(selectList, weekList))
-  }, [weekList]);
-
-  const handleDelete = (list: LotteryData[] = [], deleteList: LotteryData[] = []) => {
-    let _list = [...list];
-    deleteList.forEach(del => {
-      const delIdx = _list.findIndex(item => item.name === del.name);
-      delIdx > -1 && _list.splice(delIdx, 1);
-    })
-    console.log("_list", _list);
-    return _list;
-
-  }
+    if (weekList.length) {
+      setSelectList(sourceData.filter((item) => !weekList.find((week) => week.name === item.name)));
+    } else {
+      setSelectList(sourceData);
+    }
+  }, [sourceData, weekList]);
 
   const handleClick = () => {
     // 开始
@@ -80,28 +90,52 @@ const Lottery = () => {
     timer.current = undefined;
   };
 
-  const handleDeleteTag = (deleteTag: LotteryData) => {
-    setSelectList(handleDelete(selectList, [deleteTag]));
+  const handleDeleteTag = (deleteTag: LotteryDataType) => {
+    setSelectList(selectList.filter((item) => item.name !== deleteTag.name));
   };
 
-  const handleCheckTag = () => { };
+  const handleCheckTag = () => {};
 
-  const handleCheckSelectedTag = (tag: LotteryData) => {
-    setWeekList(Array.from(new Set([
-      ...weekList,
-      tag
-    ])))
+  const handleCheckSelectedTag = (tag: LotteryDataType) => {
+    const _list = Array.from(new Set([...weekList, tag]));
+    setWeekList(_list);
+    setStorage(
+      WEEK_COOKIE_KEY,
+      JSON.stringify({
+        week: getWeek(new Date()),
+        data: _list,
+      })
+    );
+  };
+
+  const handleDeleteWeek = (tag: LotteryDataType) => {
+    const _list = weekList.filter((item) => item.name !== tag.name);
+    setWeekList(_list);
+    setStorage(
+      WEEK_COOKIE_KEY,
+      JSON.stringify({
+        week: getWeek(new Date()),
+        data: _list,
+      })
+    );
   };
 
   return (
-    <PageLayout showHeader pageTitle="今天吃什么" backgroundColor="unset">
+    <PageLayout showHeader pageTitle="抽奖" backgroundColor="unset">
       <div className="lottery-wrapper">
         <div className="lottery-left">
-          <TagListCard title="待选店铺" list={selectList} onCheck={handleCheckTag} onClose={handleDeleteTag} />
+          <TagListCard
+            title="待选"
+            list={selectList}
+            onCheck={handleCheckTag}
+            onClose={handleDeleteTag}
+          />
         </div>
         <div className="lottery-right">
-          <TagListCard title="本周已选店铺" list={weekList} color="gold" />
-          <Card title="抽取本次就餐店铺" className="lottery-content-card">
+          {/* 本周已选 */}
+          <TagListCard title="本周已选" list={weekList} color="gold" onCheck={handleDeleteWeek} />
+          {/* 抽取本次 */}
+          <Card title="抽取本次" className="lottery-content-card">
             <div className="lottery-selected">
               {selected.length ? (
                 <TagList color="default" list={selected} onCheck={handleCheckSelectedTag} />
