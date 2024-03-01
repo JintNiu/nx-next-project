@@ -6,15 +6,20 @@ import PageHeader from "./PageHeader";
 type PropsType = {
   showHeader?: boolean;
   pageTitle?: string;
-  backgroundColor: string;
+  backgroundColor?: string;
   children?: React.ReactNode;
 };
 
-const PageLayout = ({ showHeader = false, pageTitle, backgroundColor, children }: PropsType) => {
+const PageLayout = ({
+  showHeader = false,
+  pageTitle,
+  backgroundColor = "#fff",
+  children,
+}: PropsType) => {
   return (
     <div className="page-layout">
       {showHeader && <PageHeader title={pageTitle} />}
-      <div className="page-content" style={{ background: backgroundColor || "#fff" }}>
+      <div className="page-content" style={{ background: backgroundColor }}>
         {children}
       </div>
     </div>

@@ -7,7 +7,7 @@ import { LOCALE, LOCALE_COOKIE_KEY } from "@/common/enum";
 import { setCookie } from "@/common/utils/cookie";
 import type { RadioChangeEvent } from "antd";
 import { useLocale } from "@/common/utils/locale";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 
 const BasicHeader = () => {
   const locale = useLocale();
@@ -44,7 +44,12 @@ const BasicHeader = () => {
           menu={{
             items: [
               {
-                label: "logout",
+                label: (
+                  <>
+                    <LogoutOutlined style={{ marginRight: "10px" }} />
+                    logout
+                  </>
+                ),
                 key: "logout",
               },
             ],

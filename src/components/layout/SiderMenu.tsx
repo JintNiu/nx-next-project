@@ -60,8 +60,8 @@ const SiderMenu = () => {
   return (
     <Sider
       theme="light"
-      width="140"
       className="app-sider"
+      width="256"
       collapsible
       collapsed={collapsed}
       collapsedWidth={60}
