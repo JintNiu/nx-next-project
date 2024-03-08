@@ -1,9 +1,24 @@
-import React, { useEffect, useState, useMemo, memo } from "react";
+"use client";
+import { AppDispatch } from "@/store";
+import { decrement, increment, selectCounter } from "@/store/modules/counterSlice";
+import { Button } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 
-import "./index.scss";
+export default function CounterControl() {
+  const counter = useSelector(selectCounter);
+  const dispatch = useDispatch<AppDispatch>();
 
-const UserPage = () => {
-  return <>UserPage</>;
-};
+  const handleChangeCounter = (type: "ADD" | "MINUS") => {
+    dispatch(type === "ADD" ? increment() : decrement());
+  };
 
-export default memo(UserPage);
+  return (
+    <div>
+      <h1>{counter}</h1>
+      <div>
+        <Button onClick={() => handleChangeCounter("ADD")}>ADD</Button>
+        <Button onClick={() => handleChangeCounter("MINUS")}>MINUS</Button>
+      </div>
+    </div>
+  );
+}

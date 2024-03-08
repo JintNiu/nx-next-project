@@ -30,3 +30,28 @@ img {
     max-width: 100%;
     display: block;
 }
+
+
+.customize-scrollbar,
+.customize-scrollbar-x {
+    overflow-y: auto;
+}
+
+.customize-scrollbar::-webkit-scrollbar,
+.customize-scrollbar-x::-webkit-scrollbar {
+    width: 5px;
+    height: 7px;
+}
+
+.customize-scrollbar::-webkit-scrollbar-thumb,
+.customize-scrollbar-x::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #c8c8c8;
+}
+
+.customize-scrollbar::-webkit-scrollbar-track,
+.customize-scrollbar-x::-webkit-scrollbar-track {
+    display: none;
+}

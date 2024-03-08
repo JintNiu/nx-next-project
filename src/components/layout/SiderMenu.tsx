@@ -1,61 +1,94 @@
 import { Layout, Menu, Spin } from "antd";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { SettingOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import "./index.scss";
+import { MenuItemType, menuList, routePathMap } from "@/common/menu";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, useMyDispatch } from "@/store";
+import { selectorSystem, setCollapsed, setPath } from "@/store/modules/systemSlice";
 
 const { Sider } = Layout;
 
-const items: MenuProps["items"] = [
-  {
-    label: "首页",
-    key: "home",
-    icon: <HomeOutlined />,
-  },
-  {
-    label: "用户列表",
-    key: "user",
-    icon: <UserOutlined />,
-  },
-  {
-    label: "设置",
-    key: "setting",
-    icon: <SettingOutlined />,
-  },
-  {
-    label: "工具",
-    key: "tool",
-    icon: <SettingOutlined />,
-    children: [
-      {
-        label: "摇奖",
-        key: "lottery",
-      },
-    ],
-  },
-];
+const formatMenuList=()=>{
 
-const pathMap: Record<string, string> = {
-  home: "/",
-  setting: "/setting",
-  user: "/user",
-  lottery: "/tool/lottery",
+}
+
+const getCurrentMenuConfig = (menuList: MenuItemType = [], pathname = "") => {
+  if (!pathname || pathname === "/") {
+    return {
+      openKeys: [],
+      selectedKey: "home",
+    };
+  }
+
+  const [_, ...pathList] = pathname.split("/");
+
+  let openKeys: string[] = [];
+  let selectedKey = "";
+
+  const loop = (list: MenuItemType = []) => {
+    let i = 0,
+      len = list.length;
+    let path = pathList.shift();
+    for (i = 0; i < len; i++) {
+      if (list[i].key === path) {
+        if (pathList.length && list[i].children) {
+          openKeys.push(list[i].key);
+          loop(list[i].children);
+          break;
+        }
+        selectedKey = list[i].key;
+        break;
+      }
+    }
+  };
+
+  loop(menuList);
+
+  return {
+    openKeys,
+    selectedKey,
+  };
 };
 
 const SiderMenu = () => {
-  const router = useRouter();
-  const [menus, setMenus] = useState<MenuProps["items"]>([]);
-  const [collapsed, setCollapsed] = useState(false);
+  const dispatch = useMyDispatch();
+  const { collapsed } = useSelector(selectorSystem);
 
-  const changeMenu: MenuProps["onClick"] = (e) => {
-    router.push(pathMap[e.key]);
-  };
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const [menus, setMenus] = useState<MenuItemType>([]);
+  const [selectedKey, setSelectedKey] = useState<string | undefined>(undefined);
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
+
+  const init = useRef<boolean>(false);
 
   useEffect(() => {
-    setMenus(items);
-    // setMenus(AdminStore.modules.menuModules.map((item) => getItem(item)));
+    setMenus(menuList);
   }, []);
+
+  useEffect(() => {
+    dispatch(setPath(pathname));
+  }, [pathname]);
+
+  useEffect(() => {
+    if (init.current || !menus?.length) {
+      return;
+    }
+    console.log("[path pathname]", pathname);
+    const config = getCurrentMenuConfig(menus, pathname);
+    console.log("[path config]", config);
+    setOpenKeys(config.openKeys);
+    setSelectedKey(config.selectedKey);
+    init.current = true;
+  }, [menus, pathname]);
+
+  useEffect(() => {
+    if (selectedKey) {
+      //   router.push(routePathMap[selectedKey]);
+    }
+  }, [selectedKey]);
 
   return (
     <Sider
@@ -65,15 +98,23 @@ const SiderMenu = () => {
       collapsible
       collapsed={collapsed}
       collapsedWidth={60}
-      onCollapse={setCollapsed}
+      onCollapse={(collapsed) => {
+        dispatch(setCollapsed(collapsed));
+      }}
     >
-      <Menu
-        theme="light"
-        mode="inline"
-        defaultSelectedKeys={["4"]}
-        items={menus}
-        onClick={changeMenu}
-      />
+      <div className="customize-scrollbar" style={{ height: "100%" }}>
+        <Menu
+          theme="light"
+          mode="inline"
+          selectedKeys={selectedKey ? [selectedKey] : undefined}
+          openKeys={openKeys}
+          items={menus}
+          onClick={(e) => {
+            setSelectedKey(e.key);
+          }}
+          onOpenChange={setOpenKeys}
+        />
+      </div>
     </Sider>
   );
 };

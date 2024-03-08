@@ -4,16 +4,18 @@ const { Header } = Layout;
 import "./index.scss";
 import Link from "next/link";
 import { LOCALE, LOCALE_COOKIE_KEY } from "@/common/enum";
-import { setCookie } from "@/common/utils/cookie";
 import type { RadioChangeEvent } from "antd";
-import { useLocale } from "@/common/utils/locale";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { useMyDispatch } from "@/store";
+import { selectorSystem, setLocale } from "@/store/modules/systemSlice";
 
 const BasicHeader = () => {
-  const locale = useLocale();
+  const dispatch = useMyDispatch();
+  const { locale } = useSelector(selectorSystem);
 
   const onLocaleChange = (e: RadioChangeEvent) => {
-    setCookie(LOCALE_COOKIE_KEY, e.target.value);
+    dispatch(setLocale(e.target.value));
     // window.location.reload();
   };
 

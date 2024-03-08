@@ -94,7 +94,9 @@ const Lottery = () => {
     setSelectList(selectList.filter((item) => item.name !== deleteTag.name));
   };
 
-  const handleCheckTag = () => {};
+  const handleCheckTag = (tag: LotteryDataType) => {
+    handleCheckSelectedTag(tag);
+  };
 
   const handleCheckSelectedTag = (tag: LotteryDataType) => {
     const _list = Array.from(new Set([...weekList, tag]));
