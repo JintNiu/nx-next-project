@@ -9,11 +9,9 @@ import { selectorSystem, setCollapsed, setPath } from "@/store/modules/systemSli
 
 const { Sider } = Layout;
 
-const formatMenuList=()=>{
+const formatMenuList = () => {};
 
-}
-
-const getCurrentMenuConfig = (menuList: MenuItemType = [], pathname = "") => {
+const getCurrentMenuConfig = (menuList: MenuItemType[] = [], pathname = "") => {
   if (!pathname || pathname === "/") {
     return {
       openKeys: [],
@@ -24,20 +22,20 @@ const getCurrentMenuConfig = (menuList: MenuItemType = [], pathname = "") => {
   const [_, ...pathList] = pathname.split("/");
 
   let openKeys: string[] = [];
-  let selectedKey = "";
+  let selectedKey: string = "";
 
-  const loop = (list: MenuItemType = []) => {
+  const loop = (list: MenuItemType[] = []) => {
     let i = 0,
       len = list.length;
     let path = pathList.shift();
     for (i = 0; i < len; i++) {
-      if (list[i].key === path) {
-        if (pathList.length && list[i].children) {
-          openKeys.push(list[i].key);
-          loop(list[i].children);
+      if (list[i]?.key === path) {
+        if (pathList.length && list[i]?.children) {
+          openKeys.push(list[i]?.key);
+          loop(list[i]?.children);
           break;
         }
-        selectedKey = list[i].key;
+        selectedKey = list[i]?.key;
         break;
       }
     }
@@ -58,7 +56,7 @@ const SiderMenu = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [menus, setMenus] = useState<MenuItemType>([]);
+  const [menus, setMenus] = useState<MenuItemType[]>([]);
   const [selectedKey, setSelectedKey] = useState<string | undefined>(undefined);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
@@ -86,7 +84,7 @@ const SiderMenu = () => {
 
   useEffect(() => {
     if (selectedKey) {
-      //   router.push(routePathMap[selectedKey]);
+      router.push(routePathMap[selectedKey]);
     }
   }, [selectedKey]);
 

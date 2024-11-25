@@ -1,11 +1,15 @@
 import type { MenuProps } from "antd";
 import { SettingOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 
-export type MenuItemType = MenuProps["items"] & {
+export type MenuItemType = {
+  key: string;
   path?: string;
+  label?: string;
+  icon?: React.ReactNode;
+  children?: MenuItemType[];
 };
 
-export const menuList: MenuItemType = [
+export const menuList: MenuItemType[] = [
   {
     label: "首页",
     key: "home",
