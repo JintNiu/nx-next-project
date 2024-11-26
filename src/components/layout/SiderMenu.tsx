@@ -83,7 +83,7 @@ const SiderMenu = () => {
   }, [menus, pathname]);
 
   useEffect(() => {
-    if (selectedKey) {
+    if (selectedKey && routePathMap[selectedKey]) {
       router.push(routePathMap[selectedKey]);
     }
   }, [selectedKey]);

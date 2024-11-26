@@ -6,5 +6,5 @@ import { useDispatch, useSelector } from "react-redux";
 export default function CounterControl() {
   const dispatch = useDispatch<AppDispatch>();
 
-  return <div>productlines</div>;
+  return <div>product</div>;
 }

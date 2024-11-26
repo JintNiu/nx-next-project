@@ -54,9 +54,9 @@ export const menuList: MenuItemType[] = [
     children: [
       {
         label: "产品线",
-        key: "productLines",
+        key: "product",
         icon: <SettingOutlined />,
-        path: "/productlines",
+        path: "/product",
       },
       {
         label: "需求",
@@ -88,7 +88,7 @@ export const menuList: MenuItemType[] = [
     label: "设置",
     key: "setting",
     icon: <SettingOutlined />,
-    path: "/user",
+    path: "/setting",
   },
   {
     label: "其他",
@@ -106,7 +106,17 @@ export const menuList: MenuItemType[] = [
 
 export const routePathMap: Record<string, string> = {
   home: "/",
-  setting: "/setting",
+  analysis: "/dashboard/analysis",
   user: "/user",
+  canvas: "/canvas",
+  page: "/page",
+  form: "/form",
+  board: "/board",
+  product: "/board/product",
+  project: "/board/project",
+  task: "/board/task",
+  sprint: "/board/sprint",
+  defects: "/board/defects",
+  setting: "/setting",
   lottery: "/tool/lottery",
 };
