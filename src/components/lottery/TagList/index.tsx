@@ -1,4 +1,4 @@
-import { LotteryDataType } from "@/common/data/lottery";
+import { LotteryDataType } from "@/mock/lottery";
 import { Tag } from "antd";
 import { memo } from "react";
 

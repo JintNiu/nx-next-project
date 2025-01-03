@@ -3,7 +3,7 @@
 "use client"; //this is a client side component
 
 import { LOCALE, LOCALE_COOKIE_KEY } from "@/common/enum";
-import { getCookie, setCookie } from "@/common/utils/cookie";
+import { getCookie, setCookie } from "@/utils/cookie";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
 

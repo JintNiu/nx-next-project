@@ -1,7 +1,7 @@
 "use client";
-import { lotteryData, LotteryDataType } from "@/common/data/lottery";
-import { getStorage, setStorage } from "@/common/utils/cookie";
-import { getWeek } from "@/common/utils/date";
+import { lotteryData, LotteryDataType } from "@/mock/lottery";
+import { getStorage, setStorage } from "@/utils/cookie";
+import { getWeek } from "@/utils/date";
 import PageLayout from "@/components/layout/PageLayout";
 import TagList from "@/components/lottery/TagList";
 import TagListCard from "@/components/lottery/TagListCard";

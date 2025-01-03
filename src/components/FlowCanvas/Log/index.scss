@@ -1,0 +1,23 @@
+.flow-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .flow-log-title {
+        font-weight: bold;
+    }
+
+    .log-type-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .log-type-text {
+            padding: 4px 10px;
+            background-color: #e6f4ff;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    }
+}

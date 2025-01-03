@@ -3,10 +3,12 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import counterReducer from "./modules/counterSlice";
 import systemSlice from "./modules/systemSlice";
+import flowSlice from "./modules/flowSlice";
 
 const rootReducer = combineReducers({
   counter: counterReducer,
   system: systemSlice,
+  flow: flowSlice,
 });
 
 export const store = configureStore({

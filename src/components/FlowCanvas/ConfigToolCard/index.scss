@@ -1,0 +1,10 @@
+.flow-config-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+
+    .flow-config-title {
+        font-weight: bold;
+    }
+}

@@ -1,4 +1,4 @@
-import { LOCALE, LOCALE_COOKIE_KEY } from "../enum";
+import { LOCALE, LOCALE_COOKIE_KEY } from "../common/enum";
 import { getCookie } from "./cookie";
 
 export const useLocale = () => {
