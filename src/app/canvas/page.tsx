@@ -1,9 +1,15 @@
 "use client";
 import FlowCanvas from "@/components/FlowCanvas/index.js";
 import PageLayout from "@/components/layout/PageLayout";
-import { canvasConfigData } from "@/mock/canvas";
+import { mockCanvasConfigData, mockComponentMap } from "@/mock/canvas";
 import { AppDispatch, useMyDispatch } from "@/store";
-import { selectorFlow, setSteps, setStructure } from "@/store/modules/flowSlice";
+import {
+  selectorFlow,
+  setSteps,
+  setStructure,
+  setEditing,
+  setComponentMap,
+} from "@/store/modules/flowSlice";
 import { Button } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,9 +39,18 @@ export default function CounterControl() {
   }, []);
 
   const fetchData = () => {
-    const { nodes, configs } = canvasConfigData;
+    const { nodes, configs } = mockCanvasConfigData;
     dispatch(setSteps(configs));
     dispatch(setStructure(nodes));
+    dispatch(setComponentMap(mockComponentMap));
+  };
+
+  const handleEdit = () => {
+    dispatch(setEditing(true));
+  };
+
+  const handleSave = () => {
+    dispatch(setEditing(false));
   };
 
   return (
@@ -45,10 +60,15 @@ export default function CounterControl() {
       pageTitle="画布"
       backgroundColor="unset"
       headerOperation={
-        <>
-          <Button type="primary">编辑</Button>
-          <Button type="primary">保存</Button>
-        </>
+        editing ? (
+          <Button type="primary" onClick={handleSave}>
+            保存
+          </Button>
+        ) : (
+          <Button type="primary" onClick={handleEdit}>
+            编辑
+          </Button>
+        )
       }
     >
       <div className="canvas-wrapper">

@@ -7,6 +7,7 @@ import { ACTION } from '../constant';
 import { useSelector } from 'react-redux';
 import { selectorFlow, setPaste, setSteps, setStructure } from '@/store/modules/flowSlice';
 import { getI18n } from '@/utils/i18n';
+import { useMyDispatch } from '@/store';
 
 const SHARK = {
     cutNodeTotal: getI18n('page_cut_node_total', 'Cut ${total} node(s).'),

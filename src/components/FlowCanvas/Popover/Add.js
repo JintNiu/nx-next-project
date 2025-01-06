@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Popover } from 'antd';
 import { addNewNode } from '../util';
 import { useSelector } from 'react-redux';
-import { selectorFlow } from '@/store/modules/flowSlice';
+import { selectorFlow, setNodePopFocus, setNodePopOpen } from '@/store/modules/flowSlice';
 import { useMyDispatch } from '@/store';
+import Connector from '../Connector';
 
 export default (props) => {
     const {
@@ -12,6 +13,7 @@ export default (props) => {
         triggerMap,
         flowError,
         structure,
+        selectorRange,
     } = useSelector(selectorFlow);
     const dispatch = useMyDispatch();
 
@@ -21,8 +23,9 @@ export default (props) => {
         if (selectorRange) {
             dispatch(setSelectorRange(null));
         }
-        dispatch(setFocus(open));
-        setOpen(open);
+        dispatch(setNodePopFocus(open));
+        dispatch(setNodePopOpen(open));
+        setOpen(open)
     }
 
     const onSelect = async (id, snapshot) => {
@@ -36,11 +39,11 @@ export default (props) => {
             nodeConfig: componentMap[id]
             // nodeConfig: snapshot ? snapshotComponentMap[id] : componentMap[id]
         });
-        setOpen(false);
         dispatch(setSteps(results.steps));
         dispatch(setStructure(results.structure));
         dispatch(setActiveNodeId(results.id));
-        dispatch(setFocus(false));
+        dispatch(setNodePopFocus(false));
+        setOpen(false);
     }
 
     return (
