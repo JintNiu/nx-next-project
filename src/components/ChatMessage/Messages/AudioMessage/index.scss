@@ -1,0 +1,130 @@
+$viewerPrefix: chat-message;
+
+.#{$viewerPrefix} {
+    &-audio-content {
+        color: #383838;
+        padding: 8px 15px 8px 15px;
+        display: flex;
+        flex-direction: column;
+        white-space: nowrap;
+
+        .#{$viewerPrefix} {
+            &-voice-content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                .voice-symbol {
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    transform: rotate(45deg);
+                    vertical-align: middle;
+                    margin-left: 4px;
+
+                    .voice-circle {
+                        box-sizing: border-box;
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        border-color: #333333;
+                        border-style: solid;
+                        border-width: 2px 2px 0 0;
+                        border-radius: 0 100% 0 0;
+                        opacity: 1;
+
+                        &.first {
+                            width: 13px;
+                            height: 13px;
+                            -webkit-animation-delay: 200ms;
+                            animation-delay: 200ms;
+
+                            &.animate {
+                                opacity: 0.1;
+                                -webkit-animation: voiceanimation2 1s infinite both;
+                                animation: voiceanimation2 1s infinite both;
+                            }
+                        }
+
+                        &.second {
+                            width: 8px;
+                            height: 8px;
+
+                            &.animate {
+                                opacity: 0.1;
+                                -webkit-animation: voiceanimation 1s infinite both;
+                                animation: voiceanimation 1s infinite both;
+                            }
+                        }
+
+                        &.third {
+                            width: 3px;
+                            height: 3px;
+                            opacity: 1;
+                            -webkit-animation: none;
+                            animation: none;
+                        }
+
+                    }
+                }
+
+                .voice-time {
+                    color: #333333;
+                    font-size: 14px;
+                    margin-left: 3px;
+                }
+            }
+        }
+
+        @keyframes voiceanimation {
+            0% {
+                opacity: 0.1;
+            }
+
+            25% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+
+            70%,
+            99% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 0.1;
+            }
+        }
+
+        @keyframes voiceanimation2 {
+
+            0%,
+            49% {
+                opacity: 0.1;
+            }
+
+            50% {
+                opacity: 0.1;
+            }
+
+            75% {
+                opacity: 0.6;
+            }
+
+            99% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 0.1;
+            }
+        }
+
+    }
+}

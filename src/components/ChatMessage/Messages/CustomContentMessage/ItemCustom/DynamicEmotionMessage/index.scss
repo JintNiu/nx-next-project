@@ -1,0 +1,13 @@
+$viewerPrefix: chat-message;
+.#{$viewerPrefix} {
+    &-dynamic-emotion{
+        img{
+            position: relative;
+            -o-object-fit: cover;
+            object-fit: cover;
+            max-width: 400px;
+            max-height: 380px;
+            height: 150px;
+        }
+    }
+}

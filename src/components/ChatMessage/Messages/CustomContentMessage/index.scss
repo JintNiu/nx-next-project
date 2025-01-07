@@ -1,0 +1,27 @@
+$viewerPrefix: chat-message;
+
+.#{$viewerPrefix} {
+    &-imgtxtmsg {
+        padding: 12px;
+        position: relative;
+        word-break: break-word;
+        max-width: 100%;
+        box-sizing: border-box;
+
+        &.markdown-message-content {
+            font-size: 14px;
+            text-align: initial;
+            white-space: initial;
+            overflow-wrap: break-word;
+            min-width: 220px;
+        }
+
+        &.card-has-footer {
+            padding-bottom: 0px;
+        }
+
+        &.card-no-padding {
+            padding: 0px;
+        }
+    }
+}

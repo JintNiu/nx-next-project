@@ -1,0 +1,37 @@
+$viewerPrefix: chat-message;
+
+.#{$viewerPrefix} {
+    &-table-content {
+        position: relative;
+        font-size: 14px;
+        text-align: initial;
+        white-space: initial;
+        overflow-wrap: break-word;
+        min-width: 220px;
+
+        .#{$viewerPrefix} {
+            &-table-wrapper {
+                table {
+                    display: block;
+                    width: 100%;
+                    overflow: auto;
+                    border-collapse: collapse;
+
+                    tr {
+                        background: #ffffff;
+                        border-top: 1px solid #c6cbd1;
+
+                        &:nth-child(2n) {
+                            background-color: #f6f8fa;
+                        }
+                    }
+
+                    td {
+                        padding: 6px 13px;
+                        border: 1px solid #dfe2e5;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+$viewerPrefix: chat-message;
+
+.#{$viewerPrefix} {
+    &-txtmsg {
+        white-space: pre-wrap;
+        padding: 12px 17px;
+        font-size: 14px;
+
+        .emoji-img {
+            width: 24px;
+            height: 24px;
+            vertical-align: bottom;
+        }
+
+        .is-at {
+            color: #1466de;
+            cursor: pointer;
+            margin: 3px 3px 0 0;
+        }
+
+        a {
+            color: #1466de;
+        }
+    }
+}

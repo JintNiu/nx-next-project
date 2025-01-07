@@ -1,0 +1,12 @@
+$viewerPrefix: chat-message;
+
+.#{$viewerPrefix} {
+
+    &-icon-img {
+        display: inline-flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+}

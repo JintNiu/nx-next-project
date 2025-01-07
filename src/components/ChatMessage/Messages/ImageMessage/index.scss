@@ -1,0 +1,19 @@
+$viewerPrefix: chat-message;
+
+.#{$viewerPrefix} {
+    &-imgmsg {
+        position: relative;
+        object-fit: cover;
+        background-color: #e8eaed;
+        border-radius: inherit;
+
+        &-img {
+            border-radius: 2px 10px 10px 10px;
+            position: relative;
+            object-fit: cover;
+            max-width: 400px;
+            max-height: 380px;
+            display: block;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+$viewerPrefix: chat-message;
+
+.#{$viewerPrefix} {
+    &-message-cite-content {
+        padding: 12px;
+        position: relative;
+        overflow-wrap: break-word;
+        color: #000000;
+    }
+}
